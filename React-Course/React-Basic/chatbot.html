@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Chat Bot</title>
+	<style>
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+		.send-button {
+			background-color: rgb(25,135,84);
+			color: white;
+			padding: 12px 20px;
+			margin-left: 12px;
+			border: none;
+			border-radius: 10px;
+			font-size: 15px;
+			cursor: pointer;
+			/* flex-grow: 1; */
+		}
+		.chat-input {
+			padding: 12px 15px;
+			border-radius: 10px;
+			border-width: 1px;
+			font-size: 15px;
+			flex-grow: 1;
+		}
+		.chat-input-container {
+			display: flex;
+			margin-bottom: 20px;
+			margin-left: 5px;
+			margin-right: 5px ;
+		}
+		.app-container {
+			max-width: 600px;
+			/* margin left right auto, akan menamah space kiri kanan, sama rata, sehingga container jadi ditengah*/
+			margin-left: auto;
+			margin-right: auto;
+			background-color: rgb(199, 228, 205);
+			/* padding: 10px 10px; */
+			border-radius: 5px;
+			height: 100vh; /* set tingginya sama dengan tinggi browser view */
+			display: flex;
+			flex-direction: column;
+		}
+		.chat-message-user {
+			display: flex;
+			justify-content: end;
+			align-items: start; /* rata vertikal top , biar tdak strecth gambarnya*/
+		}
+		.chat-message-robot {
+			display: flex;
+			justify-content: start;
+			align-items: start;
+		}
+		.chat-message-text {
+			background-color: rgb(238,238,238);
+			padding: 15px 20px;
+			border-radius: 10px;
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-bottom: 20px;
+			max-width: 300px;
+		}
+		.chat-message-profile {
+			width: 45px;
+		}
+		.chat-message-list-container {
+			flex-grow: 1; /* grow and use all remaining space */
+			margin-top: 15px;
+			margin-left: 5px;
+			margin-right: 5px;
+			overflow: scroll; /*it will show scroll instead pushing down the content when the contents is over */
+			scrollbar-width: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="js-container"></div>
+	<!-- <script src="react-basics.js"></script> -->
+
+	<script src="https://unpkg.com/supersimpledev/react.js"></script>
+	<script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+	<script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+	<script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+	<script src="https://unpkg.com/supersimpledev/babel.js"></script>
+	<script type="text/babel">
+
+		function ChatInput({chatMessages, setChatMessages}) {
+			const [inputText, setInputText] = React.useState('');
+			function saveInputText(event) {
+				setInputText(event.target.value);
+			}
+			function sendMessage() {
+				/* 
+				we replace the state data through the setter function setChatMessages
+				first we copy the existing data using javascript spread operator
+				then we add the new data at the end
+				spread operator will create a copy of existing data and put inside the array
+				 */
+				const newChatMessages = [
+					...chatMessages,
+					{
+						message: inputText,
+						user: 'user',
+						id: crypto.randomUUID()
+					}
+				];
+
+				setChatMessages(newChatMessages);
+
+				//Chatbot object is define in external library defined in Chatbot.js	
+				const response =  Chatbot.getResponse(inputText);
+				setChatMessages([
+					...newChatMessages,
+					{
+						message: response,
+						user: 'robot',
+						id: crypto.randomUUID()
+					}
+				]);
+
+				setInputText(''); //kosongkan textbox
+			}
+
+			return (
+				<div className="chat-input-container">
+					<input
+						type="text"
+						id="txtMessage"
+						placeholder="Send message to chat bot"
+						size="50"
+						value={inputText}
+						onChange={saveInputText}
+						className="chat-input"
+					/>
+					<button
+						className="send-button"
+						onClick={sendMessage}
+					>Send</button>
+				</div>
+			);
+		}
+
+		// function ChatMessage(p) {
+		//destructuring properties object
+		function ChatMessageComponent({ message, sender }) {
+				return (
+				<div className={sender==='user' ? 'chat-message-user' : 'chat-message-robot'} >
+					{/* guard (&&) operator in javascript */}
+					{sender === 'robot' && (
+						<img src="robot.png" alt="robot icon" className="chat-message-profile" />
+					)}
+					<div className="chat-message-text">{message}</div>
+					{sender === 'user' && (
+						<img src="user.png" alt="user icon" className="chat-message-profile" />
+					)}
+
+				</div>
+			);
+		}
+
+		function ChatMessageListComponent({chatMessages}) {
+			const chatMessageListRef = React.useRef(null); //ref untuk container message list, 
+			React.useEffect(()=> {
+				// react useEffect will run this function, 
+				// everytime the component is  after created or after updated
+
+				//after ChatMessageListComponent is updated , 
+				// we need to scroll down the content to show the newest message
+				const containerElm =  chatMessageListRef.current;
+				if (containerElm) {
+					containerElm.scrollTop = containerElm.scrollHeight;
+				}
+			}, [chatMessages]);
+
+			return (
+				<div
+					className="chat-message-list-container"
+					ref={chatMessageListRef}
+				>
+					{
+						chatMessages.map((msg) => {
+							return (
+								<ChatMessageComponent
+									message={msg.message}
+									sender={msg.user}
+									key={msg.id}
+								/>
+							);
+						})
+					}
+				</div>
+			);
+		}
+
+		function App() {
+						//javascript array destructuring
+			const [chatMessagesArray, setChatMessages] = React.useState(
+				[
+					{
+						message: 'hello chatbot',
+						user: 'user',
+						id: '1'
+					},
+					{
+						message: 'hello, how can i help you',
+						user: 'robot',
+						id: '2'
+					},
+					{
+						message: 'can you get me todays date ?',
+						user: 'user',
+						id: '3'
+					},
+					{
+						message: 'Today is september 24',
+						user: 'robot',
+						id: '4'
+					}
+				]
+			);
+			/**
+			 * React.useState return array with two index
+			 *first index of React.useState is the value (getter)
+			 *second index of React.useState is the setter used for updating data, 
+			 *in react we shpuldnot update the state directly, instead we use the setter updateChatMessages, 
+			 *this also tell React that the data is changed 
+			*/
+			// const [chatMessagesArray, updateChatMessages] = array;
+			// const chatMessagesArray = array[0]; //
+			// const updateChatMessages = array[1];
+			// const chatMessagesArray =
+			return (
+				<div className="app-container">
+					
+					<ChatMessageListComponent chatMessages={chatMessagesArray} />
+					<ChatInput 
+						chatMessages= {chatMessagesArray}
+						setChatMessages={setChatMessages}
+					/>
+				</div>
+			);
+		}
+		// const myButton = <button>Click Me</button>;
+		const container = document.querySelector(".js-container");
+		ReactDOM.createRoot(container).render(<App />);
+	</script>
+</body>
+
+</html>

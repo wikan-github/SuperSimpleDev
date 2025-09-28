@@ -1,0 +1,13 @@
+
+.app-container {
+	max-width: 600px;
+	/* margin left right auto, akan menamah space kiri kanan, sama rata, sehingga container jadi ditengah*/
+	margin-left: auto;
+	margin-right: auto;
+	background-color: rgb(199, 228, 205);
+	/* padding: 10px 10px; */
+	border-radius: 5px;
+	height: 100vh; /* set tingginya sama dengan tinggi browser view */
+	display: flex;
+	flex-direction: column;
+}

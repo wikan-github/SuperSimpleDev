@@ -1,0 +1,9 @@
+
+.chat-message-list-container {
+	flex-grow: 1; /* grow and use all remaining space */
+	margin-top: 15px;
+	margin-left: 5px;
+	margin-right: 5px;
+	overflow: scroll; /*it will show scroll instead pushing down the content when the contents is over */
+	scrollbar-width: none;
+}
