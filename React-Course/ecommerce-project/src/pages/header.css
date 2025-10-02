@@ -74,8 +74,8 @@
   height: 38px;
   padding-left: 15px;
   border: none;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  /* border-top-left-radius: 5px; */
+  /* border-bottom-left-radius: 5px; */
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -85,15 +85,19 @@
   border: none;
   width: 45px;
   height: 40px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+   border-top-left-radius: 0px; 
+   border-bottom-left-radius: 0px; 
+   border-top-right-radius: 5px; 
+   border-bottom-right-radius: 5px; 
   flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
 }
 
 .header .search-icon {
   height: 20px;
-  margin-left: 0px;
-  margin-top: 3px;
+  /* margin-left: 0px; */
+  /* margin-top: 3px; */
 }
 
 .header .right-section {
