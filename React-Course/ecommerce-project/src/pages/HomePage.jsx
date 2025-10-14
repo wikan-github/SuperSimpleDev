@@ -1,9 +1,10 @@
+import axios from 'axios';
 import "./HomePage.css";
 import { Header } from "../components/Header";
 import { products } from "../../starting-code/data/products";
 
 export function HomePage() {
-	fetch('http://localhost:3000/api/products')
+	/* fetch('http://localhost:3000/api/products')
 		.then((res)=> {
 			//kembalikan dalam format json, sehinga siap dikonsumsi oleh .then berikutnya
 			return res.json();
@@ -11,6 +12,13 @@ export function HomePage() {
 			// respond.json().then((data) => { console.log(data)});
 		}).then((products) => {
 			console.log(products);
+		});
+		 */
+		
+		//axios lebih simple ketimbang fetch 
+		axios.get('http://localhost:3000/api/products')
+		.then((res)=> {
+			console.log(res.data);
 		});
 		
 
