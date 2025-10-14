@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 export function HomePage() {
 	const [products,setProducts]= useState([]);
+	const [cart,setCart] = useState([]);
 
 	useEffect(()=> {
 		//useEffect let us control when some code run based on dependency array []
@@ -18,6 +19,12 @@ export function HomePage() {
 			// save the loaded products into state data
 			setProducts(res.data);
 			// console.log(res.data);
+		});
+
+		axios.get('http://localhost:3000/api/cart-items')
+		.then((responds) => {
+			// console.log(responds);
+			setCart(responds.data);
 		});
 	},[]);
 
@@ -39,7 +46,7 @@ export function HomePage() {
 	return (
 		<>
 			<title>Ecommerce Project</title>
-			<Header />
+			<Header cart={cart}/>
 			<div className="home-page">
 				<div className="products-grid">
 					{products.map((product) => {
