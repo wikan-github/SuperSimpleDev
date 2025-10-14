@@ -3,6 +3,7 @@ import "./HomePage.css";
 import { Header } from "../components/Header";
 // import { products } from "../../starting-code/data/products";
 import { useEffect, useState } from 'react';
+import { formatMoney } from '../utils/money';
 
 //extract cart object from props
 export function HomePage({cart}) {
@@ -68,7 +69,7 @@ export function HomePage({cart}) {
 									<div className="product-rating-count link-primary">{product.rating.count}</div>
 								</div>
 								{/* one dollar = 100 cents */}
-								<div className="product-price">${(product.priceCents/100).toFixed(2)}</div>
+								<div className="product-price">{formatMoney(product.priceCents)}</div>
 
 								<div className="product-quantity-container">
 									<select>
