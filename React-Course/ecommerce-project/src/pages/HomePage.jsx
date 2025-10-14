@@ -4,9 +4,9 @@ import { Header } from "../components/Header";
 // import { products } from "../../starting-code/data/products";
 import { useEffect, useState } from 'react';
 
-export function HomePage() {
+//extract cart object from props
+export function HomePage({cart}) {
 	const [products,setProducts]= useState([]);
-	const [cart,setCart] = useState([]);
 
 	useEffect(()=> {
 		//useEffect let us control when some code run based on dependency array []
@@ -21,11 +21,7 @@ export function HomePage() {
 			// console.log(res.data);
 		});
 
-		axios.get('api/cart-items')
-		.then((responds) => {
-			// console.log(responds);
-			setCart(responds.data);
-		});
+
 	},[]);
 
 	/* fetch('http://localhost:3000/api/products')
