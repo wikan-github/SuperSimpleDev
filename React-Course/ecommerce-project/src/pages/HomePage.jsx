@@ -1,9 +1,26 @@
 import axios from 'axios';
 import "./HomePage.css";
 import { Header } from "../components/Header";
-import { products } from "../../starting-code/data/products";
+// import { products } from "../../starting-code/data/products";
+import { useEffect, useState } from 'react';
 
 export function HomePage() {
+	const [products,setProducts]= useState([]);
+
+	useEffect(()=> {
+		//useEffect let us control when some code run based on dependency array []
+		//empty [] dependency array will make the code run once, after the component created
+		//if dependency array [], not provided useEffect will run everytime component loaded 
+		//<StrictMode> at root component will cause useEffect runs twice during development mode 
+		//<StricMode> helps to catch bug during development, and ony run during development
+		axios.get('http://localhost:3000/api/products')
+		.then((res)=> {
+			// save the loaded products into state data
+			setProducts(res.data);
+			// console.log(res.data);
+		});
+	},[]);
+
 	/* fetch('http://localhost:3000/api/products')
 		.then((res)=> {
 			//kembalikan dalam format json, sehinga siap dikonsumsi oleh .then berikutnya
@@ -13,13 +30,10 @@ export function HomePage() {
 		}).then((products) => {
 			console.log(products);
 		});
-		 */
 		
+		 */
 		//axios lebih simple ketimbang fetch 
-		axios.get('http://localhost:3000/api/products')
-		.then((res)=> {
-			console.log(res.data);
-		});
+		
 		
 
 	return (
