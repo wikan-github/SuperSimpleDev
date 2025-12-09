@@ -1,14 +1,14 @@
 import "./App.css";
-import { CheckOutPage } from "./pages/CheckOutPage";
-import { HomePage } from "./pages/HomePage";
+import { CheckOutPage } from "./pages/checkout/CheckOutPage";
 import { BrowserRouter, Routes, Route } from "react-router";
 
 // import '../styles/shared/general.css';
 import "./styles/shared/general.css";
-import { OrdersPage } from "./pages/OrdersPage";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { HomePage } from "./pages/home/HomePage";
+import { OrdersPage } from "./pages/orders/OrdersPage";
 
 function App() {
 	const [cart, setCart] = useState([]);
