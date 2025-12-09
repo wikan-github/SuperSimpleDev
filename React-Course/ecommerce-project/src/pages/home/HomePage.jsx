@@ -16,13 +16,18 @@ export function HomePage({cart}) {
 		//if dependency array [], not provided useEffect will run everytime component loaded 
 		//<StrictMode> at root component will cause useEffect runs twice during development mode 
 		//<StricMode> helps to catch bug during development, and ony run during development
-		axios.get('api/products')
+		const fetchHomeData = async ()=> {
+			const responseData = await axios.get('api/products');
+			setProducts(responseData.data);
+		}
+		fetchHomeData();
+		/* axios.get('api/products')
 		.then((res)=> {
 			// save the loaded products into state data
 			setProducts(res.data);
 			// console.log(res.data);
 		});
-
+ */
 
 	},[]);
 
