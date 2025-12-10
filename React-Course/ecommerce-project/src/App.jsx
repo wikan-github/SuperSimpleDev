@@ -12,28 +12,26 @@ import { OrdersPage } from "./pages/orders/OrdersPage";
 
 function App() {
 	const [cart, setCart] = useState([]);
-
+	const loadCart = async () => {
+		const response = await axios.get("api/cart-items?expand=product");
+		setCart(response.data);
+	}
 	useEffect(() => {
-
-		const fetchCart = async ()=> {
-			const response= await axios.get("api/cart-items?expand=product");
-			setCart(response.data);
-		} 
-		fetchCart();
+		loadCart();
 	}, []);
 
 	return (
 		<Routes>
-			<Route index element={<HomePage cart={cart}/>} />
-			<Route path="checkout" element={<CheckOutPage cart={cart}/>} />
-			<Route path="orders" element={<OrdersPage cart={cart}/>} />
+			<Route index element={<HomePage cart={cart} loadCart={loadCart} />} />
+			<Route path="checkout" element={<CheckOutPage cart={cart} />} />
+			<Route path="orders" element={<OrdersPage cart={cart} />} />
 		</Routes>
 	);
 
 	/*  return (
-   <Route path="/" element={<HomePage />}></Route>
-   <HomePage />
-  ); */
+	 <Route path="/" element={<HomePage />}></Route>
+	 <HomePage />
+	); */
 }
 
 export default App;
