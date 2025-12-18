@@ -1,7 +1,5 @@
 /* file notes */
-import dayjs from "dayjs";
 import axios from "axios";
-import { formatMoney } from "../../utils/money";
 import "./checkout-header.css";
 import "./CheckOutPage.css";
 import { useEffect } from "react";
@@ -18,13 +16,18 @@ export function CheckOutPage({ cart, loadCart }) {
 		const fetchData = async ()=> {
 			let response = await axios.get("api/delivery-options?expand=estimatedDeliveryTime");
 			setDeliveryOptions(response.data);
-
-			response = await axios.get("/api/payment-summary");
-			setPaymentSummary(response.data);
 		}
-
 		fetchData();
 	}, []);
+
+	useEffect(()=> {
+		const fetchPaymentSummary = async () => {
+			//reload payment summary
+			let response = await axios.get("/api/payment-summary");
+			setPaymentSummary(response.data);
+		}
+		fetchPaymentSummary();
+	},[cart]);
 
 	return (
 		<>
