@@ -22,7 +22,7 @@ export function CheckOutPage({ cart, loadCart }) {
 
 	useEffect(()=> {
 		const fetchPaymentSummary = async () => {
-			//reload payment summary
+			//reload payment summary each time cart changes
 			let response = await axios.get("/api/payment-summary");
 			setPaymentSummary(response.data);
 		}
@@ -41,8 +41,6 @@ export function CheckOutPage({ cart, loadCart }) {
 				<div className="checkout-grid">
 				<OrderSummary cart={cart} deliveryOptions={deliveryOptions} loadCart={loadCart} />
 				<PaymentSummary paymentSummary={paymentSummary}/>
-
-		
 				</div>
 			</div>
 		</>
