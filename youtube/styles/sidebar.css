@@ -1,0 +1,8 @@
+.sidebar {
+  background-color: green;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 55px; /* below the fixed header, header height is 55px*/
+  width: 72px;
+}

@@ -1,0 +1,13 @@
+/* common styles used accross the site */
+
+p {
+	font-family: Roboto, Arial, sans-serif;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+body {
+  margin: 0;
+	padding-top: 80px; /* give space for fixed header, so the header doesn't cover the content */
+	padding-left: 80px; /* give space for fixed sidebar, so the sidebar doesn't cover the content */
+}

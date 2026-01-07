@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .div1 {
+      /* border: 1px solid black; */
+      background: lightblue;
+      height: 150px;
+      width: 150px;
+    }
+
+    .div2 {
+      /* border: 1px solid black; */
+      background: lightpink;
+      height: 150px;
+      width: 150px;
+      position: relative;
+    }
+    .video-duration {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: black;
+      color: white;
+      padding: 3px;
+      border-radius: 7%;
+    }
+
+    .header {
+      height: 30px;
+      background-color: rgb(6, 38, 180);
+      color: white;
+      text-align: center;
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      z-index: 1000; /* pastikan elemen diatas yang lain */
+
+    }
+
+    .sidebar {
+      background-color: green;
+      color: white;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      top: 30px;
+      width: 72px;
+    }
+
+    .absolute {
+      background-color: orange;
+      color: white;
+      position: absolute;
+    }
+
+    body {
+      height: 3000px;
+      padding-top: 40px;
+      padding-left: 80px;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="header">HEADER</div>
+  <div class="sidebar">sidebar</div>
+    <div class="absolute">
+    absolute
+  </div>
+  <div class="div1">div 1</div>
+  <div class="div2">
+    <div class="video-duration">5:35</div>
+  </div>
+
+</body>
+
+</html>

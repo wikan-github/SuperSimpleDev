@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      height: 3000px;
+      /* biar bisa discroll */
+      padding: 0px;
+    }
+
+    .item-container {
+      position: relative;
+      width: 200px;
+      height: 300px;
+      border: 2px solid rgb(90, 86, 86);
+      overflow: hidden;
+      /* background-image: url('images/shirt.jpg');
+      background-size: cover;
+      background-position: center; */
+    }
+
+    .product-image {
+      width: 300%;
+      height: 300%;
+      /* object-fit: cover; */
+      position: absolute;
+      left: -50px;
+      top: -150px;
+
+      /* z-index: -1; */
+
+    }
+
+    .discount {
+      background-color: rgb(93, 89, 89);
+      color: white;
+      padding: 3px;
+      /* border-radius: 2px; */
+      position: absolute;
+      top: 5px;
+      right: 0px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .button-container {
+      background-color: rgba(226, 220, 220, 0.75);
+      height: 75px;
+      /* width: 200px; */
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-to-cart-button {
+      width: 100px;
+      height: 30px;
+      font-size: 12px;
+      border-radius: 0px;
+    }
+  </style>
+  <script>
+    /*
+    function changeImageCursorMouseEnter() {
+      console.log('mouse enter');
+      document.getElementById('product_image').style.cursor = 'grab';
+    }
+    function changeImageCursorMouseOver() {
+      console.log('mouse over');
+      document.getElementById('product_image').style.cursor = 'grab';
+    }
+    function changeImageCursorButtonMouseDown() {
+      console.log('mouse down');
+      document.getElementById('product_image').style.cursor = 'all-scroll';
+    }
+    function changeImageCursorButtonMouseUp() {
+      console.log('mouse up');
+      document.getElementById('product_image').style.cursor = 'grab';
+    }
+    function onProductImageDrag(e) {
+      console.log('dragging');
+        let mouseDownX = event.clientX;
+        document.getElementById('button_beli').textContent = `Mouse X: ${mouseDownX}px`;
+    }
+
+    function onClickImage(e) {
+      console.log('image clicked');
+      // e.style
+      // alert('Image clicked');
+    } */
+
+    /*
+    function setEventListenersOnProductImage() {
+      const productImage = document.getElementById('product_image');
+      productImage.addEventListener('mouseenter', changeImageCursorMouseEnter);
+      productImage.addEventListener('mouseover', changeImageCursorMouseOver);
+      productImage.addEventListener('drag', onProductImageDrag);
+      productImage.addEventListener('mousedown', changeImageCursorButtonMouseDown);
+      productImage.addEventListener('mouseup', changeImageCursorButtonMouseUp);
+      productImage.addEventListener('onclick', onClickImage());
+    }
+    */
+    // setEventListenersOnProductImage(); //invoke the function
+    window.onload = function () {
+      // setEventListenersOnProductImage();
+      let mouseDownX = 0;
+      let mouseDownY = 0;
+      const productImage = document.getElementById('product_image');
+
+
+      let imgOldLeft = 0; let imgOldTop = 0;
+      imgOldLeft = productImage.getBoundingClientRect().left;
+      imgOldTop = productImage.getBoundingClientRect().top;
+      console.log(`Image Old Left: ${imgOldLeft}px, Image Old Top: ${imgOldTop}px`);
+
+      /* productImage.addEventListener('click', function (e) {
+         let left = productImage.getBoundingClientRect().left;
+         let top = productImage.getBoundingClientRect().top;
+         console.log(`Left: ${left}px, Top: ${top}px`);
+         document.getElementById('button_beli').textContent = `Left: ${left}px, Top: ${top}px`;
+       }); */
+
+      /* const btn = document.getElementById('button_beli');
+       btn.addEventListener('click', function (e) {
+         let left = productImage.getBoundingClientRect().left;
+         let top = productImage.getBoundingClientRect().top;
+         console.log(`Left: ${left}px, Top: ${top}px`);
+         document.getElementById('button_beli').textContent = `Left: ${left}px, Top: ${top}px`;
+       });*/
+
+      let oldX = 0; let oldY = 0;
+      let productImagedefaultCursor = 'zoom-in';
+
+      //mouse over event 
+      productImage.addEventListener('mouseenter', function (e) {
+        productImage.style.cursor = 'zoom-in';
+
+        productImage.addEventListener('mouseleave', onMouseLeave);
+        productImage.addEventListener('wheel', onMouseWheel);
+
+        function onMouseLeave(e) {
+          productImage.style.cursor = productImagedefaultCursor;
+        }
+
+        const zoomPercent = 10;
+        let increaseWidth = 0;
+        let increaseHeight = 0;
+        function onMouseWheel(e) {
+          e.preventDefault();
+
+          increaseWidth = Math.round((productImage.clientWidth * zoomPercent) / 100);
+          increaseHeight = Math.round((productImage.clientHeight * zoomPercent) / 100);
+          if (e.deltaY < 0) {
+            //scroll up
+
+            productImage.style.width = (productImage.clientWidth + increaseWidth) + 'px';
+            productImage.style.height = (productImage.clientHeight + increaseHeight) + 'px';
+          } else {
+            //scroll down
+            productImage.style.width = (productImage.clientWidth - increaseWidth) + 'px';
+            productImage.style.height = (productImage.clientHeight - increaseHeight) + 'px';
+          }
+        }
+
+      });
+
+      productImage.addEventListener('mousedown', function (e) {
+        e.preventDefault(); // Prevent default drag behavior
+        productImage.style.cursor = 'all-scroll';
+        // console.log('mouse down');
+
+        console.log(`Image Old Left: ${imgOldLeft}px, Image Old Top: ${imgOldTop}px`);
+
+        let mouseDownX = e.clientX;
+        let mouseDownY = e.clientY;
+
+        console.log(`Mouse Down X: ${mouseDownX}px, Mouse Down Y: ${mouseDownY}px`);
+
+        function onMouseMove(e) {
+
+          let mouseMoveX = e.clientX;
+          let mouseMoveY = e.clientY;
+          // console.log(`Mouse Move X: ${mouseMoveX}px, Mouse Move Y: ${mouseMoveY}px`);
+
+          let deltaX = mouseMoveX - mouseDownX;
+          let deltaY = mouseMoveY - mouseDownY;
+          console.log(`Delta X: ${deltaX}px, Delta Y: ${deltaY}px`);
+
+          productImage.style.left = imgOldLeft + deltaX + 'px';
+          productImage.style.top = imgOldTop + deltaY + 'px';
+
+          // moveAt(e.pageX, e.pageY);
+        }
+
+        productImage.addEventListener('mousemove', onMouseMove);
+
+        productImage.addEventListener('mouseup', function () {
+          console.log('mouse up');
+          productImage.style.cursor = productImagedefaultCursor;
+          imgOldLeft = productImage.getBoundingClientRect().left;
+          imgOldTop = productImage.getBoundingClientRect().top;
+          console.log(`New Image Old Left: ${imgOldLeft}px, New Image Old Top: ${imgOldTop}px`);
+
+          productImage.removeEventListener('mousemove', onMouseMove);
+          productImage.onmouseup = null;
+
+          productImage.onmousemove = null;
+        });
+
+        /*
+        let shiftX = e.clientX - productImage.getBoundingClientRect().left;
+        let shiftY = e.clientY - productImage.getBoundingClientRect().top;
+
+        function moveAt(pageX, pageY) {
+          productImage.style.left = pageX - shiftX + 'px';
+          productImage.style.top = pageY - shiftY + 'px';
+          oldX = pageX - shiftX;
+          oldY = pageY - shiftY;
+          console.log(`Old X: ${oldX}px, Old Y: ${oldY}px`);
+        }
+
+        function onMouseMove(e) {
+          moveAt(e.pageX, e.pageY);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        document.addEventListener('mouseup', function () {
+          document.removeEventListener('mousemove', onMouseMove);
+          productImage.onmouseup = null;
+        });
+        */
+      });
+    };
+
+
+  </script>
+</head>
+
+<body>
+  <div class="item-container">
+    <img id="product_image" class="product-image" src="images/shirt.jpg">
+    <div class="discount">20% OFF</div>
+    <div class="button-container">
+      <button id="button_beli" class="add-to-cart-button">Beli Sekarang</button>
+    </div>
+  </div>
+</body>
+
+</html>

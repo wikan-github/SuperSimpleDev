@@ -1,0 +1,90 @@
+
+ 
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 15px;
+      row-gap: 40px;
+    }
+
+    .video-preview {
+      /* kosong */
+    }
+
+    .thumbnail-row {
+      margin-bottom: 12px;
+      position: relative;
+      /*the container must bie in relative position, to make video time absolute*/; 
+    }
+
+    .thumbnail {
+      width: 100%;
+      /* width: 300px; */
+      /* background-color: gray; */
+      /* height: 300px;
+      object-fit: contain;
+      border-width:2px; 
+      border-style: solid; 
+      border-color: red; */
+    }
+
+    .video-info-grid {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      align-items: center;
+      /* vertically center the items in the grid */
+    }
+
+    .channel-picture {
+      /* background-color: gray; */
+      /* display: inline-block; */
+      /* width: 50px; */
+      vertical-align: top;
+    }
+
+    .video-info {
+      /* background-color: gray; */
+      /* display: inline-block; */
+      /* width: 240px; */
+      /* width: 100%; */
+    }
+
+    .video-title {
+      margin-top: 0px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      margin-bottom: 12px;
+    }
+
+    .video-author,
+    .video-stats {
+      font-size: 12px;
+      color: rgb(97, 97, 97);
+    }
+
+    .video-author {
+      margin-bottom: 4px;
+    }
+
+    .profile-picture {
+      /* by default image in html will overflow it's container
+      if the image is larger than the container, so need to set width to 100%
+      */
+      width: 40px;
+      border-radius: 50px;
+    }
+
+    .video-time {
+      font-family: Roboto, Arial;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 5px 4px 5px;
+      border-radius: 2px;
+      background-color: black;
+      color: white;
+      position: absolute;
+      /*video time must be inside of relative positioned container */
+      bottom: 8px;
+      right: 5px;
+    }
