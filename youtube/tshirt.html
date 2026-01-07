@@ -10,10 +10,12 @@
       margin: 0;
       height: 3000px;
       /* biar bisa discroll */
-      padding: 0px;
+      padding: 100px;
     }
 
-    .item-container {
+    .product-container {
+      margin: 0;
+      padding: 0;
       position: relative;
       width: 200px;
       height: 300px;
@@ -25,12 +27,12 @@
     }
 
     .product-image {
-      width: 300%;
-      height: 300%;
+      width: 100%;
+      height: 100%;
       /* object-fit: cover; */
       position: absolute;
-      left: -50px;
-      top: -150px;
+      left: 0px;
+      top: 50px;
 
       /* z-index: -1; */
 
@@ -112,14 +114,17 @@
     // setEventListenersOnProductImage(); //invoke the function
     window.onload = function () {
       // setEventListenersOnProductImage();
-      let mouseDownX = 0;
-      let mouseDownY = 0;
+      // let mouseDownX = 0;
+      // let mouseDownY = 0;
       const productImage = document.getElementById('product_image');
-
+      const productImageContainer = document.getElementById('product_container');
+      const containerBoundLeft = productImageContainer.getBoundingClientRect().left;
+      const containerBoundTop = productImageContainer.getBoundingClientRect().top;
+      console.log(`Container Bound Left: ${containerBoundLeft}px, Container Bound Top: ${containerBoundTop}px`);
 
       let imgOldLeft = 0; let imgOldTop = 0;
-      imgOldLeft = productImage.getBoundingClientRect().left;
-      imgOldTop = productImage.getBoundingClientRect().top;
+      imgOldLeft = productImage.getBoundingClientRect().left - containerBoundLeft;
+      imgOldTop = productImage.getBoundingClientRect().top - containerBoundTop;
       console.log(`Image Old Left: ${imgOldLeft}px, Image Old Top: ${imgOldTop}px`);
 
       /* productImage.addEventListener('click', function (e) {
@@ -151,70 +156,190 @@
           productImage.style.cursor = productImagedefaultCursor;
         }
 
-        const zoomPercent = 10;
-        let increaseWidth = 0;
-        let increaseHeight = 0;
+
         function onMouseWheel(e) {
+          //TODO: center image saat zoom
+          const zoomPercent = 10;
+          let increaseWidth = 0;
+          let increaseHeight = 0;
           e.preventDefault();
 
           increaseWidth = Math.round((productImage.clientWidth * zoomPercent) / 100);
           increaseHeight = Math.round((productImage.clientHeight * zoomPercent) / 100);
           if (e.deltaY < 0) {
             //scroll up
-
+            productImage.style.cursor = 'zoom-in';
             productImage.style.width = (productImage.clientWidth + increaseWidth) + 'px';
             productImage.style.height = (productImage.clientHeight + increaseHeight) + 'px';
           } else {
             //scroll down
+            productImage.style.cursor = 'zoom-out';
             productImage.style.width = (productImage.clientWidth - increaseWidth) + 'px';
             productImage.style.height = (productImage.clientHeight - increaseHeight) + 'px';
           }
+          // centerImage();
         }
-
       });
 
+      function centerImage() {
+        productImage.style.left = '0px';
+        productImage.style.top = '0px';
+        // imgOldLeft = productImage.getBoundingClientRect().left;
+        // imgOldTop = productImage.getBoundingClientRect().top;
+      }
+
+      let mouseDownX = 0;
+      let mouseDownY = 0;
       productImage.addEventListener('mousedown', function (e) {
         e.preventDefault(); // Prevent default drag behavior
         productImage.style.cursor = 'all-scroll';
         // console.log('mouse down');
 
-        console.log(`Image Old Left: ${imgOldLeft}px, Image Old Top: ${imgOldTop}px`);
+        // console.log(`Image Old Left: ${imgOldLeft}px, Image Old Top: ${imgOldTop}px`);
 
-        let mouseDownX = e.clientX;
-        let mouseDownY = e.clientY;
+        mouseDownX = e.clientX;
+        mouseDownY = e.clientY;
 
         console.log(`Mouse Down X: ${mouseDownX}px, Mouse Down Y: ${mouseDownY}px`);
 
+        // let deltaX = mouseMoveX - mouseDownX;
+        // let deltaY = mouseMoveY - mouseDownY;
         function onMouseMove(e) {
+          console.log(`Mouse Move X: ${e.clientX}px, Mouse Up Y: ${e.clientY}px`);
 
-          let mouseMoveX = e.clientX;
-          let mouseMoveY = e.clientY;
-          // console.log(`Mouse Move X: ${mouseMoveX}px, Mouse Move Y: ${mouseMoveY}px`);
+          mouseUpX = e.clientX;
+          mouseUpY = e.clientY;
 
-          let deltaX = mouseMoveX - mouseDownX;
-          let deltaY = mouseMoveY - mouseDownY;
-          console.log(`Delta X: ${deltaX}px, Delta Y: ${deltaY}px`);
+          let deltaX = mouseUpX - mouseDownX;
+          let deltaY = mouseUpY - mouseDownY;
 
-          productImage.style.left = imgOldLeft + deltaX + 'px';
-          productImage.style.top = imgOldTop + deltaY + 'px';
+          if (e.clientY < mouseDownY) {
+            console.log('mouse moved up');
+            deltaY = -Math.abs(deltaY);
+            console.log(`Up : ${Math.abs(deltaY)}px`);
+            productImage.style.top = imgOldTop + deltaY + 'px';
+            imgOldTop += deltaY;
+            console.log(`New Image Old Top: ${imgOldTop}px`);
+          } else {
+            console.log('mouse moved down');
+            deltaY = Math.abs(deltaY);
+            console.log(`Down : ${deltaY}px`);
+            productImage.style.top = imgOldTop + deltaY + 'px';
+            imgOldTop += deltaY;
+            console.log(`New Image Old Top: ${imgOldTop}px`);
+          }
 
-          // moveAt(e.pageX, e.pageY);
+          if (e.clientX < mouseDownX) {
+            console.log('mouse moved left');
+            deltaX = -Math.abs(deltaX);
+            console.log(`Left : ${Math.abs(deltaX)}px`);
+            productImage.style.left = imgOldLeft + deltaX + 'px';
+            imgOldLeft += deltaX;
+            console.log(`New Image Old Left: ${imgOldLeft}px`);
+          } else {
+            console.log('mouse moved right');
+            deltaX = Math.abs(deltaX);
+            console.log(`Right : ${deltaY}px`);
+            productImage.style.left = imgOldLeft + deltaX + 'px';
+            imgOldLeft += deltaX;
+            console.log(`New Image Old Left: ${imgOldLeft}px`);
+          }
+
+           mouseDownY= e.clientY;
+           mouseDownX= e.clientX;
         }
 
         productImage.addEventListener('mousemove', onMouseMove);
+        productImage.addEventListener('mouseup', onMouseUp);
+        function onMouseUp(e) {
+          
+          console.log(`Mouse Up X: ${e.clientX}px, Mouse Up Y: ${e.clientY}px`);
+          console.log('Saving new image position and dimension to database...')
+          console.log(`Image New Left Position: ${imgOldLeft }px, Image New Top Position: ${imgOldTop}px`);
+          /*
+          mouseUpX = e.clientX;
+          mouseUpY = e.clientY;
 
-        productImage.addEventListener('mouseup', function () {
-          console.log('mouse up');
+          let deltaX = mouseUpX - mouseDownX;
+          let deltaY = mouseUpY - mouseDownY;
+
+          if (e.clientY < mouseDownY) {
+            console.log('mouse moved up');
+            deltaY = -Math.abs(deltaY);
+            console.log(`Up : ${Math.abs(deltaY)}px`);
+            productImage.style.top = imgOldTop + deltaY + 'px';
+            imgOldTop += deltaY;
+            console.log(`New Image Old Top: ${imgOldTop}px`);
+          } else {
+            console.log('mouse moved down');
+            deltaY = Math.abs(deltaY);
+            console.log(`Down : ${deltaY}px`);
+            productImage.style.top = imgOldTop + deltaY + 'px';
+            imgOldTop += deltaY;
+            console.log(`New Image Old Top: ${imgOldTop}px`);
+          } */
+
+          productImage.removeEventListener('mousemove', onMouseMove);
+          productImage.removeEventListener('mouseup', onMouseUp);
+        }
+
+        //--------------------------
+        // function productImage.addEventListener('mouseup', function (e) {
+        //   console.log(`Mouse Up X: ${e.clientX}px, Mouse Up Y: ${e.clientY}px`);
+
+        //   mouseUpX = e.clientX;
+        //   mouseUpY = e.clientY;
+
+        //   let deltaX = mouseUpX - mouseDownX;
+        //   let deltaY = mouseUpY - mouseDownY;
+
+        //   if (e.clientY < mouseDownY) {
+        //     console.log('mouse moved up');
+        //     deltaY = -Math.abs(deltaY);
+        //     console.log(`Up : ${Math.abs(deltaY)}px`);
+        //     productImage.style.top = imgOldTop + deltaY + 'px';
+        //     imgOldTop += deltaY;
+        //     console.log(`New Image Old Top: ${imgOldTop}px`);
+        //   } else {
+        //     console.log('mouse moved down');
+        //     deltaY = Math.abs(deltaY);
+        //     console.log(`Down : ${deltaY}px`);
+        //     productImage.style.top = imgOldTop + deltaY + 'px';
+        //     imgOldTop += deltaY;
+        //     console.log(`New Image Old Top: ${imgOldTop}px`);
+        //   } //----------
+
+          // productImage.removeEventListener('mousemove', onMouseMove);
+          // productImage.onmouseup = null;
+          // productImage.onmousemove = null;
+
+          /*
+          console.log(`Image Old Left: ${imgOldLeft }px, Image Old Top: ${imgOldTop}px`);
+          console.log(`Mouse Up X: ${mouseUpX}px, Mouse Up Y: ${mouseUpY}px`);
+          console.log(`Delta X: ${deltaX}px, Delta Y: ${deltaY}px`);
+
+          productImage.style.top = imgOldTop + deltaY + 'px';
+          imgOldTop += deltaY;
+          console.log(`New Image Old Top: ${imgOldTop}px`);
+
+          let boundTop =  productImage.getBoundingClientRect().top;
+          console.log(`Bound Top: ${boundTop}px`);
+          */
+
+
+          /*
+          // console.log('mouse up');
           productImage.style.cursor = productImagedefaultCursor;
           imgOldLeft = productImage.getBoundingClientRect().left;
           imgOldTop = productImage.getBoundingClientRect().top;
-          console.log(`New Image Old Left: ${imgOldLeft}px, New Image Old Top: ${imgOldTop}px`);
+          // console.log(`New Image Old Left: ${imgOldLeft}px, New Image Old Top: ${imgOldTop}px`);
 
           productImage.removeEventListener('mousemove', onMouseMove);
-          productImage.onmouseup = null;
+          // productImage.onmouseup = null;
 
-          productImage.onmousemove = null;
-        });
+          // productImage.onmousemove = null;
+          */
+        // }); //-------------
 
         /*
         let shiftX = e.clientX - productImage.getBoundingClientRect().left;
@@ -247,7 +372,7 @@
 </head>
 
 <body>
-  <div class="item-container">
+  <div id="product_container" class="product-container">
     <img id="product_image" class="product-image" src="images/shirt.jpg">
     <div class="discount">20% OFF</div>
     <div class="button-container">
