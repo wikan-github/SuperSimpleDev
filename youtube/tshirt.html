@@ -90,8 +90,8 @@
     }
     function onProductImageDrag(e) {
       console.log('dragging');
-        let mouseDownX = event.clientX;
-        document.getElementById('button_beli').textContent = `Mouse X: ${mouseDownX}px`;
+        let initialMouseX = event.clientX;
+        document.getElementById('button_beli').textContent = `Mouse X: ${initialMouseX}px`;
     }
 
     function onClickImage(e) {
@@ -114,8 +114,8 @@
     // setEventListenersOnProductImage(); //invoke the function
     window.onload = function () {
       // setEventListenersOnProductImage();
-      // let mouseDownX = 0;
-      // let mouseDownY = 0;
+      // let initialMouseX = 0;
+      // let initialMouseY = 0;
       const productImage = document.getElementById('product_image');
       const productImageContainer = document.getElementById('product_container');
       const containerBoundLeft = productImageContainer.getBoundingClientRect().left;
@@ -188,8 +188,8 @@
         // imgOldTop = productImage.getBoundingClientRect().top;
       }
 
-      let mouseDownX = 0;
-      let mouseDownY = 0;
+      let initialMouseX = 0;
+      let initialMouseY = 0;
       productImage.addEventListener('mousedown', function (e) {
         e.preventDefault(); // Prevent default drag behavior
         productImage.style.cursor = 'all-scroll';
@@ -197,23 +197,23 @@
 
         // console.log(`Image Old Left: ${imgOldLeft}px, Image Old Top: ${imgOldTop}px`);
 
-        mouseDownX = e.clientX;
-        mouseDownY = e.clientY;
+        initialMouseX = e.clientX;
+        initialMouseY = e.clientY;
 
-        console.log(`Mouse Down X: ${mouseDownX}px, Mouse Down Y: ${mouseDownY}px`);
+        console.log(`Mouse Down X: ${initialMouseX}px, Mouse Down Y: ${initialMouseY}px`);
 
-        // let deltaX = mouseMoveX - mouseDownX;
-        // let deltaY = mouseMoveY - mouseDownY;
+        // let deltaX = mouseMoveX - initialMouseX;
+        // let deltaY = mouseMoveY - initialMouseY;
         function onMouseMove(e) {
           console.log(`Mouse Move X: ${e.clientX}px, Mouse Up Y: ${e.clientY}px`);
 
           mouseUpX = e.clientX;
           mouseUpY = e.clientY;
 
-          let deltaX = mouseUpX - mouseDownX;
-          let deltaY = mouseUpY - mouseDownY;
+          let deltaX = mouseUpX - initialMouseX;
+          let deltaY = mouseUpY - initialMouseY;
 
-          if (e.clientY < mouseDownY) {
+          if (e.clientY < initialMouseY) {
             console.log('mouse moved up');
             deltaY = -Math.abs(deltaY);
             console.log(`Up : ${Math.abs(deltaY)}px`);
@@ -229,7 +229,7 @@
             console.log(`New Image Old Top: ${imgOldTop}px`);
           }
 
-          if (e.clientX < mouseDownX) {
+          if (e.clientX < initialMouseX) {
             console.log('mouse moved left');
             deltaX = -Math.abs(deltaX);
             console.log(`Left : ${Math.abs(deltaX)}px`);
@@ -245,8 +245,8 @@
             console.log(`New Image Old Left: ${imgOldLeft}px`);
           }
 
-           mouseDownY= e.clientY;
-           mouseDownX= e.clientX;
+           initialMouseY= e.clientY;
+           initialMouseX= e.clientX;
         }
 
         productImage.addEventListener('mousemove', onMouseMove);
@@ -260,10 +260,10 @@
           mouseUpX = e.clientX;
           mouseUpY = e.clientY;
 
-          let deltaX = mouseUpX - mouseDownX;
-          let deltaY = mouseUpY - mouseDownY;
+          let deltaX = mouseUpX - initialMouseX;
+          let deltaY = mouseUpY - initialMouseY;
 
-          if (e.clientY < mouseDownY) {
+          if (e.clientY < initialMouseY) {
             console.log('mouse moved up');
             deltaY = -Math.abs(deltaY);
             console.log(`Up : ${Math.abs(deltaY)}px`);
@@ -290,10 +290,10 @@
         //   mouseUpX = e.clientX;
         //   mouseUpY = e.clientY;
 
-        //   let deltaX = mouseUpX - mouseDownX;
-        //   let deltaY = mouseUpY - mouseDownY;
+        //   let deltaX = mouseUpX - initialMouseX;
+        //   let deltaY = mouseUpY - initialMouseY;
 
-        //   if (e.clientY < mouseDownY) {
+        //   if (e.clientY < initialMouseY) {
         //     console.log('mouse moved up');
         //     deltaY = -Math.abs(deltaY);
         //     console.log(`Up : ${Math.abs(deltaY)}px`);
