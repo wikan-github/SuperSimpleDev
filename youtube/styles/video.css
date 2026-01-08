@@ -1,84 +1,111 @@
+.video-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 15px;
+	row-gap: 40px;
+}
 
- 
-    .video-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-gap: 15px;
-      row-gap: 40px;
-    }
+@media (max-width: 600px) {
+	/*jika resolusi layar 0-600px, rubah css untuk class berikut */
+	.video-grid {
+		grid-template-columns: 1fr;
+	}
+}
 
-    .video-preview {
-      /* kosong */
-    }
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	.video-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
 
-    .thumbnail-row {
-      margin-bottom: 8px;
-      position: relative;
-      /*the container must bie in relative position, to make video time absolute*/; 
-    }
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	.video-grid {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
 
-    .thumbnail {
-      width: 100%;
-      /* width: 300px; */
-      /* background-color: gray; */
-      /* height: 300px;
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	.video-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	.video-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	}
+}
+
+.thumbnail-row {
+	margin-bottom: 8px;
+	position: relative;
+	/*the container must bie in relative position, to make video time absolute*/
+}
+
+.thumbnail {
+	width: 100%;
+	/* width: 300px; */
+	/* background-color: gray; */
+	/* height: 300px;
       object-fit: contain;
       border-width:2px; 
       border-style: solid; 
       border-color: red; */
-    }
+}
 
-    .video-info-grid {
-      display: grid;
-      grid-template-columns: 50px 1fr;
-      align-items: start; /* align items to the top of the container */
-    }
+.video-info-grid {
+	display: grid;
+	grid-template-columns: 50px 1fr;
+	align-items: start; /* align items to the top of the container */
+}
 
-    .channel-picture {
-      /* background-color: gray; */
-      /* display: inline-block; */
-      /* width: 50px; */
-      vertical-align: top;
-    }
+.channel-picture {
+	/* background-color: gray; */
+	/* display: inline-block; */
+	/* width: 50px; */
+	vertical-align: top;
+}
 
+.video-title {
+	margin-top: 0px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	margin-bottom: 12px;
+}
 
+.video-author,
+.video-stats {
+	font-size: 12px;
+	color: rgb(97, 97, 97);
+}
 
-    .video-title {
-      margin-top: 0px;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      margin-bottom: 12px;
-    }
+.video-author {
+	margin-bottom: 4px;
+}
 
-    .video-author,
-    .video-stats {
-      font-size: 12px;
-      color: rgb(97, 97, 97);
-    }
-
-    .video-author {
-      margin-bottom: 4px;
-    }
-
-    .profile-picture {
-      /* by default image in html will overflow it's container
+.profile-picture {
+	/* by default image in html will overflow it's container
       if the image is larger than the container, so need to set width to 100%
       */
-      width: 36px;
-      border-radius: 50px;
-    }
+	width: 36px;
+	border-radius: 50px;
+}
 
-    .video-time {
-      font-family: Roboto, Arial;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 5px 4px 5px;
-      border-radius: 2px;
-      background-color: black;
-      color: white;
-      position: absolute;
-      /*video time must be inside of relative positioned container */
-      bottom: 8px;
-      right: 5px;
-    }
+.video-time {
+	font-family: Roboto, Arial;
+	font-size: 12px;
+	font-weight: 500;
+	padding: 4px 5px 4px 5px;
+	border-radius: 2px;
+	background-color: black;
+	color: white;
+	position: absolute;
+	/*video time must be inside of relative positioned container */
+	bottom: 8px;
+	right: 5px;
+}
