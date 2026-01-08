@@ -7,7 +7,10 @@ p {
 }
 
 body {
-  margin: 0;
+	background-color: rgb(247, 247, 247);
+	margin: 0;
 	padding-top: 80px; /* give space for fixed header, so the header doesn't cover the content */
-	padding-left: 80px; /* give space for fixed sidebar, so the sidebar doesn't cover the content */
+	padding-left: 96px; /* give space for fixed sidebar, so the sidebar doesn't cover the content */
+
+	padding-right: 24px;
 }

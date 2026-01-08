@@ -16,7 +16,7 @@
   background-color: white; /*fill the background color back, because the fixed position make it float over other content, so it losing the page background un turn into transparent background */
 
   border-bottom: 1px solid rgb(221, 214, 214);
-  z-index: 1000; /* make sure the header stay on top of other content */
+  z-index: 100; /* make sure the header stay on top of other content */
   
 }
 

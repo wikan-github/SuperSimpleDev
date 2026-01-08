@@ -12,7 +12,7 @@
     }
 
     .thumbnail-row {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       position: relative;
       /*the container must bie in relative position, to make video time absolute*/; 
     }
@@ -31,8 +31,7 @@
     .video-info-grid {
       display: grid;
       grid-template-columns: 50px 1fr;
-      align-items: center;
-      /* vertically center the items in the grid */
+      align-items: start; /* align items to the top of the container */
     }
 
     .channel-picture {
@@ -42,12 +41,7 @@
       vertical-align: top;
     }
 
-    .video-info {
-      /* background-color: gray; */
-      /* display: inline-block; */
-      /* width: 240px; */
-      /* width: 100%; */
-    }
+
 
     .video-title {
       margin-top: 0px;
@@ -71,7 +65,7 @@
       /* by default image in html will overflow it's container
       if the image is larger than the container, so need to set width to 100%
       */
-      width: 40px;
+      width: 36px;
       border-radius: 50px;
     }
 
